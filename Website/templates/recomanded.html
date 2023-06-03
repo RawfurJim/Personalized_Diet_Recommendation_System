@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recommender System</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<style>
+    body {
+        background-color: #343a40;
+        color: #fff;
+        font-family: Arial, sans-serif;
+    }
+
+    .navbar {
+        background-color:#00a65a;
+    }
+  
+    .navbar-brand {
+        font-size: 1.5em;
+        color: #fff !important;
+    }
+
+    .card {
+        background: #495057;
+        margin: 20px 0;
+    }
+
+    .card-body {
+        color: #fff;
+    }
+
+    .custom-height {
+        height: 150px;
+    }
+
+    label{
+        color: #fff !important;
+    }
+    input, select {
+        color: black;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        color: #fff;
+    }
+</style>
+<body>
+    <nav class='navbar'>
+        <a class='navbar-brand'>Diet Food Recommender</a>
+        <ul class="nav navbar-nav">
+            <li><a href="/">Home</a></li>
+            <li><a href="/recomanded">Recommend</a></li>
+            <li><a>Contact</a></li>
+        </ul>
+    </nav>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1 class="text-white">Recommender Food</h1>
+            </div>
+        </div>
+        <form action="/recommended_foods" method="post">
+            <label for="age">Age:</label><br>
+            <input type="number" id="age" name="age" required min="1" max="120"><br>
+            
+            <label for="weight">Weight:</label><br>
+            <input type="number" id="weight" name="weight" required min="1" step="0.01"><br>
+        
+            <label for="height">Height (in cm):</label><br>
+            <input type="number" id="height" name="height" required min="1" step="0.01"><br>
+        
+            <label for="gender">Gender:</label><br>
+            <select id="gender" name="gender" required>
+                <option value="">--Select your gender--</option>
+                <option value="1">Male</option>
+                <option value="0">Female</option>
+            </select><br>
+        
+            <label for="activity_lavel">Activity Level:</label><br>
+            <select id="activity_lavel" name="activity_lavel" required>
+                <option value="">--Select your activity level--</option>
+                <option value="0">Sedentary Active</option>
+                <option value="1">Lightly active</option>
+                <option value="2">Moderately active</option>
+                <option value="3">Very active</option>
+                <option value="4">Extra active</option>
+            </select><br>
+        
+            <input type="submit" value="Submit">
+        </form>
+        {% if data %}
+            <h2 class="text-white">{{data['message']}} </h4>
+            <h3 class="text-white"> According to the data your body BMI is {{data['BMI']}} </h5>
+            <h3 class="text-white"> Your Average Daily Food Calory Consumption Should Be {{data['cal']}}</h5>
+
+                <div class="container">
+                    <div class="row">
+                        {% for i in data['recomanded_food'] %}
+                            <div class="col-md-3" style="margin-top:50px">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <img class="card-img-top custom-height" src="{{i[1]}}">
+                                        <h4 class="text-white">{{i[0]}} </h4>
+                                        <h5 class="text-white"> Calory - {{i[2]}}</h5>
+                                        <h6 class="text-white"> Healthlabel - {{i[3]}}</h5>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            {% if loop.index is divisibleby 4 %}
+                                </div>
+                                {% if loop.index // 4 == 1 %}
+                                    <h2>Breakfast</h2>
+                                {% elif loop.index // 4 == 2 %}
+                                    <h2>Lunch</h2>
+                                {% elif loop.index // 4 == 3 %}
+                                    <h2>Dinner</h2>
+                                {% endif %}
+                                <div class="row">
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+                
+         
+        {% endif %}
+    </div>
+</body>
+</html>

@@ -1,0 +1,76 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recommender System</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <style>
+        body {
+            background-color: #343a40;
+            color: #fff;
+            font-family: Arial, sans-serif;
+        }
+  
+        .navbar {
+            background-color:#00a65a;
+        }
+  
+        .navbar-brand, .navbar-nav li a {
+            color: #fff !important;
+        }
+
+        .card {
+            background: #495057;
+            margin-bottom: 50px;
+        }
+
+        .card-body {
+            color: #fff;
+        }
+
+        .custom-height {
+            height: 150px;
+        }
+    </style>
+</head>
+<body>
+    <nav class='navbar'>
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class='navbar-brand'>Diet Food Recommender</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li><a href="/">Home</a></li>
+                <li><a href="/recomanded">Recomand</a></li>
+                <li><a>Contact</a></li>
+            </ul>
+        </nav>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>Top Food</h1>
+            </div>
+        </div>
+        {% for i in range(food_name | length)%}
+            <div class="col-md-3" style="margin-top:50px">
+                <div class="card">
+                    <div class="card-body">
+                        <img class="card-img-top custom-height" src="{{food_image[i]}}">
+                        <h4>{{food_name[i]}}</h4>
+                        <h5>HealthLabel - {{food_healthlabel[i]}}</h5>
+                    </div>
+                </div>
+            </div>
+            {% if loop.index is divisibleby 4 and not loop.last %}
+                </div>
+                <div class="row">
+            {% endif %}
+
+        {% endfor %}
+    </div>
+</body>
+</html>
